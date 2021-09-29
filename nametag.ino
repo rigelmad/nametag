@@ -7,19 +7,14 @@
 #include <Adafruit_NeoPixel.h>
 #include <bluefruit.h>
 
-#define NEOPIXEL_VERSION_STRING "Neopixel v2.0"
-
-/* Pin used to drive the NeoPixels */
-//#if defined ARDUINO_NRF52840_CIRCUITPLAY || defined ARDUINO_NRF52840_FEATHER
-//#define PIN     PIN_NEOPIXEL
-//#elif defined ARDUINO_NRF52832_FEATHER
-//#define PIN     30
-//#else
-//#define PIN     6
-//#endif
-#define PIN 13
+/********** Item by Item Configurables **********/
+char* ADVERTISING_NAME = "AngelineNameTag";
+uint8_t NEOPIXEL_PIN = 27;
+uint8_t NUM_PIXELS = 23;
+/************************************************/
 
 #define MAXCOMPONENTS  4
+#define NEOPIXEL_VERSION_STRING "Neopixel v2.0"
 uint8_t *pixelBuffer = NULL;
 uint8_t width = 0;
 uint8_t height = 0;
@@ -53,6 +48,7 @@ void setup()
   // Init Bluefruit
   Bluefruit.begin();
   Bluefruit.setTxPower(4);    // Check bluefruit.h for supported values
+  Bluefruit.setName(ADVERTISING_NAME);
 
   Bluefruit.Periph.setConnectCallback(connect_callback);
 
@@ -214,7 +210,7 @@ void commandSetup() {
   pixelBuffer = new uint8_t[size * components];
   neopixel.updateLength(size);
   neopixel.updateType(pixelType);
-  neopixel.setPin(PIN);
+  neopixel.setPin(NEOPIXEL_PIN);
 
   // Done
   sendResponse("OK");
@@ -227,7 +223,7 @@ void defaultSetup() {
   pixelType = NEO_GRB + NEO_KHZ400;
 
   components = (componentsValue == NEO_RGB || componentsValue == NEO_RBG || componentsValue == NEO_GRB || componentsValue == NEO_GBR || componentsValue == NEO_BRG || componentsValue == NEO_BGR) ? 3 : 4;
-  width = 24;
+  width = NUM_PIXELS;
   height = 1;
   Serial.println("Default Setup...");
   Serial.printf("\tsize: %dx%d\n", width, height);
@@ -243,7 +239,7 @@ void defaultSetup() {
   pixelBuffer = new uint8_t[size * components];
   neopixel.updateLength(size);
   neopixel.updateType(pixelType);
-  neopixel.setPin(PIN);
+  neopixel.setPin(NEOPIXEL_PIN);
   neopixel.setBrightness(50);
 
 }

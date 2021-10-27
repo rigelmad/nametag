@@ -8,8 +8,8 @@
 #include <bluefruit.h>
 
 /********** Item by Item Configurables **********/
-char* ADVERTISING_NAME = "AngelineNameTag";
-uint8_t NEOPIXEL_PIN = 27;
+char* ADVERTISING_NAME = "Sina's Nametag";
+uint8_t NEOPIXEL_PIN = 6;
 uint8_t NUM_PIXELS = 23;
 /************************************************/
 
@@ -57,7 +57,7 @@ void setup()
 
   // Configure and Start Device Information Service
   bledis.setManufacturer("Rigel Madraswalla Industries");
-  bledis.setModel("MeganScantlen-inator");
+  bledis.setModel(ADVERTISING_NAME);
   bledis.begin();
 
   // Configure and start BLE UART service
@@ -186,8 +186,11 @@ void commandVersion() {
 void commandSetup() {
   Serial.println(F("Command: Setup"));
 
-  width = bleuart.read();
-  height = bleuart.read();
+  // In practice, nametag lights don't change size. So dump these.
+  bleuart.read(); // width
+  bleuart.read(); // height
+  width = NUM_PIXELS;
+  height = 1;
   stride = bleuart.read();
   componentsValue = bleuart.read();
   is400Hz = bleuart.read();

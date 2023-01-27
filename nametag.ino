@@ -8,8 +8,8 @@
 #include <bluefruit.h>
 
 /********** Item by Item Configurables **********/
-char* ADVERTISING_NAME = "Sina's Nametag";
-uint8_t NEOPIXEL_PIN = 6;
+char* ADVERTISING_NAME = "Zad Nametag";
+uint8_t NEOPIXEL_PIN = 11;
 uint8_t NUM_PIXELS = 23;
 /************************************************/
 
@@ -20,7 +20,7 @@ uint8_t width = 0;
 uint8_t height = 0;
 uint8_t stride;
 uint8_t componentsValue;
-bool is400Hz;
+bool is400Hz = false;
 uint8_t components = 3;     // only 3 and 4 are valid values
 
 Adafruit_NeoPixel neopixel = Adafruit_NeoPixel();
@@ -223,7 +223,7 @@ void commandSetup() {
 
 void defaultSetup() {
   neoPixelType pixelType;
-  pixelType = NEO_GRB + NEO_KHZ400;
+  pixelType = NEO_GRB + (is400Hz ? NEO_KHZ400 : NEO_KHZ800);
 
   components = (componentsValue == NEO_RGB || componentsValue == NEO_RBG || componentsValue == NEO_GRB || componentsValue == NEO_GBR || componentsValue == NEO_BRG || componentsValue == NEO_BGR) ? 3 : 4;
   width = NUM_PIXELS;

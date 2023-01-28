@@ -243,7 +243,7 @@ void defaultSetup() {
   neopixel.updateLength(size);
   neopixel.updateType(pixelType);
   neopixel.setPin(NEOPIXEL_PIN);
-  neopixel.setBrightness(50);
+  neopixel.setBrightness(200);
 
 }
 
